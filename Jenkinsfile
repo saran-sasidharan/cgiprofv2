@@ -11,6 +11,11 @@ pipeline {
         sh 'bash ./jenkins/scripts/cleanup-images.sh'
       }
     }
+    stage('Push image') {
+      steps {
+        sh 'bash ./jenkins/scripts/push-images.sh'
+      }
+    }
   }
   environment {
     HOME = '.'
