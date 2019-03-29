@@ -23,6 +23,13 @@ pipeline {
         sh 'bash ./jenkins/scripts/cleanup-containers.sh'
       }
     }
+    stage('AWS deploy') {
+      steps {
+        emailext(subject: '${BUILD_ID} of ${JOB_NAME} - Approval task', body: '${JOB_NAME} completed. Need approval b4 deploy to AWS. Go to  ${BUILD_URL} Logs: ${BUILD_LOG}', to: 'saran.s.dhar@gmail.com')
+        input(message: 'Would you like to continue deplot to AWS?', ok: 'Yes please')
+        sh 'bash ./jenkins/scripts/aws-deploy.sh'
+      }
+    }
   }
   environment {
     HOME = '.'
